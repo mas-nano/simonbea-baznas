@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'DataTables')
+@section('title', 'Data Operator')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -29,8 +29,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header justify-content-between">
                                 <h4>Data Operator</h4>
+                                <a class="btn btn-success" href="{{ route('operator.create') }}"><i
+                                        class="fa-solid fa-plus"></i> Tambah</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -38,17 +40,31 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
-                                                    #
+                                                    UUID
                                                 </th>
-                                                <th>Task Name</th>
-                                                <th>Progress</th>
-                                                <th>Members</th>
-                                                <th>Due Date</th>
-                                                <th>Status</th>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Alamat</th>
+                                                <th>Picture</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            @foreach ($operator as $o)
+                                                <tr>
+                                                    <td>{{ $o->uuid }}</td>
+                                                    <td>{{ $o->name }}</td>
+                                                    <td>{{ $o->email }}</td>
+                                                    <td>{{ $o->operator == null ? '' : $o->operator->address }}</td>
+                                                    <td>Picture</td>
+                                                    <td>
+                                                        <a class="btn btn-primary" href="#">Lihat</a>
+                                                        <a class="btn btn-primary" href="#">Lihat</a>
+                                                        <a class="btn btn-primary" href="#">Lihat</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

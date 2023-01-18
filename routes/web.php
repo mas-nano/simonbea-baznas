@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OperatorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,11 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/dashboard-general-dashboard');
+Route::middleware('guest')->group(function () {
+    Route::get('/', [AuthController::class, 'loginView'])->name('login');
+    Route::post('/', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'registerView']);
+    Route::post('/register', [AuthController::class, 'register']);
+});
 
 // Dashboard
-Route::get('/dashboard-general-dashboard', function () {
-    return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
+    })->name('dashboard');
+
+    Route::prefix('operator')->group(function () {
+        Route::get('', [OperatorController::class, 'index'])->name('operator.index');
+        Route::get('create', [OperatorController::class, 'create'])->name('operator.create');
+    });
+
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::get('/dashboard-ecommerce-dashboard', function () {
     return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
