@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UpdateOperatorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email:rfc,dns|unique:users,email',
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required',
+            'password' => 'present|confirmed',
+            'password_confirmation' => 'nullable',
+            'address' => 'required',
+            'picture' => 'nullable|file|image|max:4096'
         ];
     }
 
@@ -35,12 +36,11 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name.required' => 'Nama harus diisi',
-            'email.required' => 'Email harus diisi',
-            'email.email' => 'Email tidak valid',
-            'email.unique' => 'Email sudah digunakan',
-            'password.required' => 'Password harus diisi',
             'password.confirmed' => 'Password tidak sama dengan konfirmasi password',
-            'password_confirmation.required' => 'Konfirmasi Password harus diisi'
+            'address.required' => 'Alamat harus diisi',
+            'picture.file' => 'Gambar harus berupa file',
+            'picture.image' => 'Gambar harus berekstensi jpg, jpeg, png, bmp, gif, svg, atau webp',
+            'picture.max' => 'Gambar maksimal 4MB'
         ];
     }
 }

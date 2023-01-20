@@ -24,6 +24,7 @@ class User extends Authenticatable
         'uuid',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -53,5 +54,19 @@ class User extends Authenticatable
     public function awardee()
     {
         return $this->hasOne(Awardee::class);
+    }
+
+    public function document()
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function routeNotificationForWhatsApp()
+    {
+        return $this->awardee->phone;
+    }
+    public function routeNotificationForOrangTua()
+    {
+        return $this->awardee->parent->phone;
     }
 }

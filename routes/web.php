@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AwardeeController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PeriodController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +35,42 @@ Route::middleware('auth')->group(function () {
     Route::prefix('operator')->group(function () {
         Route::get('', [OperatorController::class, 'index'])->name('operator.index');
         Route::get('create', [OperatorController::class, 'create'])->name('operator.create');
+        Route::post('create', [OperatorController::class, 'store']);
+        Route::get('{user:uuid}/show', [OperatorController::class, 'show'])->name('operator.show');
+        Route::get('{user:uuid}/edit', [OperatorController::class, 'edit'])->name('operator.edit');
+        Route::put('{user:uuid}/edit', [OperatorController::class, 'update']);
+        Route::delete('{user:uuid}/delete', [OperatorController::class, 'delete'])->name('operator.delete');
     });
+
+    Route::prefix('awardee')->group(function () {
+        Route::get('', [AwardeeController::class, 'index'])->name('awardee.index');
+        Route::get('create', [AwardeeController::class, 'create'])->name('awardee.create');
+        Route::post('create', [AwardeeController::class, 'store']);
+        Route::get('{user:uuid}/show', [AwardeeController::class, 'show'])->name('awardee.show');
+        Route::get('{user:uuid}/edit', [AwardeeController::class, 'edit'])->name('awardee.edit');
+        Route::put('{user:uuid}/edit', [AwardeeController::class, 'update']);
+        Route::delete('{user:uuid}/delete', [AwardeeController::class, 'delete'])->name('awardee.delete');
+    });
+
+    Route::prefix('profile')->group(function () {
+        Route::get('', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('awardee/edit', [ProfileController::class, 'awardeeUpdate'])->name('profile.awardee.update');
+        Route::put('operator/edit', [ProfileController::class, 'operatorUpdate'])->name('profile.operator.update');
+    });
+
+    Route::prefix('document')->group(function () {
+        Route::get('', [DocumentController::class, 'index'])->name('document.index');
+        Route::get('create', [DocumentController::class, 'create'])->name('document.create');
+        Route::post('create', [DocumentController::class, 'store']);
+        Route::get('{document:uuid}/edit', [DocumentController::class, 'edit'])->name('document.edit');
+        Route::put('{document:uuid}/edit', [DocumentController::class, 'update']);
+        Route::delete('{document:uuid}/edit', [DocumentController::class, 'delete'])->name('document.delete');
+        Route::put('{document:uuid}', [DocumentController::class, 'validation'])->name('document.validation');
+    });
+
+    Route::post('periode', [PeriodController::class, 'store'])->name('period.store');
+    Route::get('penerima', [AwardeeController::class, 'awardeeView']);
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });

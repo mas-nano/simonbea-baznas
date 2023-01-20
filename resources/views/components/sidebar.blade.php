@@ -1,61 +1,64 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Stisla</a>
+            <a href="index.html">SIMONBEA BAZNAS</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">St</a>
+            <a href="index.html">SB</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('dashboard') }}"><i class="fas fa-fire"></i> <span>Dashboard</span></a>
             </li>
-            <li class="{{ Request::is('operator') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('operator') }}"><i class="fa-solid fa-users fas"></i> <span>Data
-                        Operator</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-users fas"></i> <span>Data
-                        Penerima</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-money-bill fas"></i>
-                    <span>Pencairan
-                        Dana</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-regular fa-file fas"></i>
-                    <span>IPK</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-circle-info fas"></i>
-                    <span>Informasi Pendaftaran Beasiswa</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-circle-info fas"></i>
-                    <span>Informasi BCB Baznas</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-regular fa-file fas"></i>
-                    <span>Berkas</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-user-gear fas"></i>
-                    <span>Profile Site</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-award fas"></i>
-                    <span>Penerima BCB Baznas</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-money-bill fas"></i>
-                    <span>Pencairan Dana BCB Baznas</span></a>
-            </li>
-            <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-right-left fas"></i>
-                    <span>Daftar Mutasi Penerima</span></a>
-            </li>
+            @if (auth()->user()->role == 'operator')
+                <li class="{{ Request::is('operator') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('operator') }}"><i class="fa-solid fa-users fas"></i> <span>Data
+                            Operator</span></a>
+                </li>
+                <li class="{{ Request::is('awardee') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('awardee') }}"><i class="fa-solid fa-users fas"></i> <span>Data
+                            Penerima</span></a>
+                </li>
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-money-bill fas"></i>
+                        <span>Pencairan
+                            Dana</span></a>
+                </li>
+                <li class="{{ Request::is('document') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('document') }}"><i class="fa-regular fa-file fas"></i>
+                        <span>IPK</span></a>
+                </li>
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-circle-info fas"></i>
+                        <span>Informasi Pendaftaran Beasiswa</span></a>
+                </li>
+            @else
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-circle-info fas"></i>
+                        <span>Informasi BCB Baznas</span></a>
+                </li>
+                <li class="{{ Request::is('document') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('document') }}"><i class="fa-regular fa-file fas"></i>
+                        <span>Berkas</span></a>
+                </li>
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-user-gear fas"></i>
+                        <span>Profile Site</span></a>
+                </li>
+                <li class="{{ Request::is('penerima') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('penerima') }}"><i class="fa-solid fa-award fas"></i>
+                        <span>Penerima BCB Baznas</span></a>
+                </li>
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-money-bill fas"></i>
+                        <span>Pencairan Dana BCB Baznas</span></a>
+                </li>
+                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-right-left fas"></i>
+                        <span>Daftar Mutasi Penerima</span></a>
+                </li>
+            @endif
             <li class="menu-header">Starter</li>
             <li class="nav-item dropdown active">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>

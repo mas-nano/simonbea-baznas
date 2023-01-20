@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Operator')
+@section('title', 'Ubah Operator')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -10,11 +10,11 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Operator</h1>
+                <h1>Ubah Operator</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="{{ route('operator.index') }}">Operator</a></div>
-                    <div class="breadcrumb-item">Tambah Data Operator</div>
+                    <div class="breadcrumb-item">Ubah Data Operator</div>
                 </div>
             </div>
 
@@ -24,16 +24,17 @@
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="card">
                             <form method="POST" action="" enctype="multipart/form-data">
+                                @method('PUT')
                                 @csrf
                                 <div class="card-header">
-                                    <h4>Tambah Operator</h4>
+                                    <h4>Ubah Operator</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Nama</label>
                                         <input type="text"
                                             class="form-control @if ($errors->has('name')) is-invalid @endif"
-                                            value="{{ old('name') }}" name="name">
+                                            value="{{ $operator->name }}" name="name">
                                         @if ($errors->has('name'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('name') }}
@@ -42,14 +43,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email"
-                                            class="form-control  @if ($errors->has('email')) is-invalid @endif"
-                                            required="" value="{{ old('email') }}" name="email">
-                                        @if ($errors->has('email'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('email') }}
-                                            </div>
-                                        @endif
+                                        <p>{{ $operator->email }}</p>
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
@@ -74,9 +68,9 @@
                                         @endif
                                     </div>
                                     <div class="form-group mb-0">
-                                        <label>Address</label>
+                                        <label>Alamat</label>
                                         <textarea class="form-control @if ($errors->has('address')) is-invalid @endif" data-height="150" required=""
-                                            name="address"></textarea>
+                                            name="address">{{ $operator->operator == null ? '' : $operator->operator->address }}</textarea>
                                         @if ($errors->has('address'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('address') }}
@@ -96,7 +90,8 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <img src="" alt="" id="thumbnail" class="w-100">
+                                    <img src="{{ $operator->operator == null ? '' : asset('storage/' . $operator->operator->picture) }}"
+                                        alt="" id="thumbnail" class="w-100">
                                 </div>
                                 <div class="card-footer text-right">
                                     <button class="btn btn-primary" type="submit">Simpan</button>

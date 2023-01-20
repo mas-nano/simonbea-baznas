@@ -30,8 +30,13 @@ class AuthController extends Controller
             $remember = true;
         }
 
-        Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $remember);
-        return redirect('/dashboard');
+        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $remember)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('dashboard');
+        }
+
+        return back()->with('failed', 'Email atau password salah');
     }
 
     public function register(RegisterRequest $request)

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Operator')
+@section('title', 'Data Awardee')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -18,10 +18,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Operator</h1>
+                <h1>Data Awardee</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item">Operator</div>
+                    <div class="breadcrumb-item">Awardee</div>
                 </div>
             </div>
 
@@ -29,10 +29,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header justify-content-between">
-                                <h4>Data Operator</h4>
-                                <a class="btn btn-success" href="{{ route('operator.create') }}"><i
-                                        class="fa-solid fa-plus"></i> Tambah</a>
+                            <div class="card-header">
+                                <h4>Data Awardee</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -45,24 +43,47 @@
                                                 <th>Nama</th>
                                                 <th>Email</th>
                                                 <th>Alamat</th>
+                                                <th>NIM</th>
+                                                <th>No Telp</th>
+                                                <th>Semester</th>
+                                                <th>Angkatan</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($operator as $o)
+                                            @foreach ($awardee as $a)
                                                 <tr>
-                                                    <td>{{ $o->uuid }}</td>
-                                                    <td>{{ $o->name }}</td>
-                                                    <td>{{ $o->email }}</td>
-                                                    <td>{{ $o->operator == null ? 'Belum diisi' : $o->operator->address }}
+                                                    <td>{{ $a->uuid }}</td>
+                                                    <td>{{ $a->name }}</td>
+                                                    <td>{{ $a->email }}</td>
+                                                    <td>{{ $a->awardee == null ? 'Belum diisi' : $a->awardee->address }}
+                                                    </td>
+                                                    <td>{{ $a->awardee == null ? 'Belum diisi' : $a->awardee->nim }}</td>
+                                                    <td>{{ $a->awardee == null ? 'Belum diisi' : $a->awardee->phone }}</td>
+                                                    <td>{{ $a->awardee == null ? 'Belum diisi' : $a->awardee->level }}</td>
+                                                    <td>{{ $a->awardee == null ? 'Belum diisi' : $a->awardee->gen }}
+                                                    </td>
+                                                    <td>
+                                                        @if ($a->awardee == null)
+                                                            <span class="badge badge-warning">Belum diisi</span>
+                                                        @else
+                                                            @if ($a->awardee->status == 'aktif')
+                                                                <span class="badge badge-success">Aktif</span>
+                                                            @elseif($a->awardee->status == 'pending')
+                                                                <span class="badge badge-warning">Pending</span>
+                                                            @else
+                                                                <span class="badge badge-danger">Nonaktif</span>
+                                                            @endif
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <a class="btn btn-primary"
-                                                            href="{{ route('operator.show', $o->uuid) }}">Lihat</a>
+                                                            href="{{ route('awardee.show', $a->uuid) }}">Lihat</a>
                                                         <a class="btn btn-warning"
-                                                            href="{{ route('operator.edit', $o->uuid) }}">Ubah</a>
+                                                            href="{{ route('awardee.edit', $a->uuid) }}">Ubah</a>
                                                         <form method="POST"
-                                                            action="{{ route('operator.delete', $o->uuid) }}"
+                                                            action="{{ route('awardee.delete', $a->uuid) }}"
                                                             class="form d-inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -101,7 +122,7 @@
             event.preventDefault()
             swal({
                     title: 'Apakah Anda yakin?',
-                    text: 'Sekali menghapus operator, tidak bisa dikembalikan lagi.',
+                    text: 'Semua data user yang berhubungan akan dihapus.',
                     icon: 'warning',
                     buttons: true,
                     dangerMode: true,
@@ -109,7 +130,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         this.submit()
-                        swal('Operator sudah dihapus', {
+                        swal('User sudah dihapus', {
                             icon: 'success',
                         });
                     }

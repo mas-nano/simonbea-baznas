@@ -9,6 +9,11 @@
 
 @section('main')
     <div class="card card-primary">
+        @if (session('failed'))
+            <div class="alert alert-danger mt-1">
+                {{ session('failed') }}
+            </div>
+        @endif
         <div class="card-header">
             <h4>Masuk</h4>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Operator')
+@section('title', 'Penerima BCB Baznas')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -18,10 +18,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Operator</h1>
+                <h1>Penerima BCB Baznas</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item">Operator</div>
+                    <div class="breadcrumb-item">Penerima BCB Baznas</div>
                 </div>
             </div>
 
@@ -30,9 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header justify-content-between">
-                                <h4>Data Operator</h4>
-                                <a class="btn btn-success" href="{{ route('operator.create') }}"><i
-                                        class="fa-solid fa-plus"></i> Tambah</a>
+                                <h4>Penerima BCB Baznas</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -40,34 +38,30 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
-                                                    UUID
+                                                    No
                                                 </th>
                                                 <th>Nama</th>
                                                 <th>Email</th>
-                                                <th>Alamat</th>
-                                                <th>Action</th>
+                                                <th>NIM</th>
+                                                <th>Semester</th>
+                                                <th>Angkatan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($operator as $o)
+                                            @foreach ($awardee as $key => $a)
                                                 <tr>
-                                                    <td>{{ $o->uuid }}</td>
-                                                    <td>{{ $o->name }}</td>
-                                                    <td>{{ $o->email }}</td>
-                                                    <td>{{ $o->operator == null ? 'Belum diisi' : $o->operator->address }}
+                                                    <td class="text-center">{{ ++$key }}</td>
+                                                    <td>{{ $a->user->name }}
+                                                    <td>
+                                                        {{ $a->user->email }}
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-primary"
-                                                            href="{{ route('operator.show', $o->uuid) }}">Lihat</a>
-                                                        <a class="btn btn-warning"
-                                                            href="{{ route('operator.edit', $o->uuid) }}">Ubah</a>
-                                                        <form method="POST"
-                                                            action="{{ route('operator.delete', $o->uuid) }}"
-                                                            class="form d-inline">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-danger" type="submit">Hapus</button>
-                                                        </form>
+                                                        {{ $a->user->awardee == null ? '-' : $a->user->awardee->nim }}
+                                                    </td>
+                                                    <td>{{ $a->user->awardee == null ? '-' : $a->user->awardee->level }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $a->user->awardee == null ? '-' : $a->user->awardee->gen }}
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -96,12 +90,21 @@
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
+    @if (session('pending'))
+        <script>
+            swal({
+                icon: 'info',
+                title: 'Oops...',
+                text: '{{ session('pending') }}',
+            })
+        </script>
+    @endif
     <script>
         $(".form").submit(function(event) {
             event.preventDefault()
             swal({
                     title: 'Apakah Anda yakin?',
-                    text: 'Sekali menghapus operator, tidak bisa dikembalikan lagi.',
+                    text: 'Sekali menghapus dokumen, tidak bisa dikembalikan lagi.',
                     icon: 'warning',
                     buttons: true,
                     dangerMode: true,
@@ -109,7 +112,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         this.submit()
-                        swal('Operator sudah dihapus', {
+                        swal('Dokumen sudah dihapus', {
                             icon: 'success',
                         });
                     }
