@@ -34,12 +34,8 @@
                             <div class="card-header flex-column">
                                 <div class="d-flex justify-content-between w-100">
                                     <h4>Berkas</h4>
-                                    <div class="d-flex">
-                                        <a class="btn btn-success mr-1" href="{{ route('document.create') }}"><i
-                                                class="fa-solid fa-plus"></i> Tambah</a>
-                                        <button class="btn btn-warning" href="{{ route('document.create') }}"
-                                            id="modal-5"><i class="fa-solid fa-plus"></i> Ubah Periode</button>
-                                    </div>
+                                    <button class="btn btn-warning" href="{{ route('document.create') }}" id="modal-5"><i
+                                            class="fa-solid fa-plus"></i> Ubah Periode</button>
                                 </div>
                                 <p class="m-0 w-100">
                                     Periode: Semester {{ ucfirst($period->semester) }} {{ date('Y') }}. Tanggal Akhir
@@ -99,22 +95,25 @@
                                                         <a class="btn btn-primary"
                                                             href="{{ route('awardee.show', $d->user->uuid) }}">Detail
                                                             Penerima</a>
-                                                        <form method="POST"
-                                                            action="{{ route('document.validation', $d->uuid) }}"
-                                                            class="form d-inline">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button class="btn btn-success" type="submit" name="valid"
-                                                                value="true">Validasi</button>
-                                                        </form>
-                                                        <form method="POST"
-                                                            action="{{ route('document.validation', $d->uuid) }}"
-                                                            class="form d-inline">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button class="btn btn-danger" type="submit" name="decline"
-                                                                value="true">Tolak</button>
-                                                        </form>
+                                                        @if ($d->status == 'tolak' || $d->status == 'pending')
+                                                            <form method="POST"
+                                                                action="{{ route('document.validation', $d->uuid) }}"
+                                                                class="form d-inline">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button class="btn btn-success" type="submit"
+                                                                    name="valid" value="true">Validasi</button>
+                                                            </form>
+                                                        @else
+                                                            <form method="POST"
+                                                                action="{{ route('document.validation', $d->uuid) }}"
+                                                                class="form d-inline">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button class="btn btn-danger" type="submit" name="decline"
+                                                                    value="true">Tolak</button>
+                                                            </form>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach

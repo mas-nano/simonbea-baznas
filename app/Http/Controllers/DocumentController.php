@@ -11,6 +11,8 @@ use App\Notifications\AwardeeNonActive;
 use App\Notifications\ParentActivated;
 use App\Notifications\ParentNonActive;
 use App\Traits\UploadFile;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,6 +47,12 @@ class DocumentController extends Controller
 
         if (Document::where('user_id', auth()->user()->id)->where('status', 'tolak')->count() > 0 || auth()->user()->awardee->status == 'nonaktif') {
             return redirect()->route('document.index')->with('pending', 'Tidak bisa upload berkas karena beasiswa telah ditolak');
+        }
+
+        $period = Period::find(1);
+
+        if (new DateTime() > new DateTime($period->last_registration)) {
+            return redirect()->route('document.index')->with('pending', 'Tidak bisa upload berkas karena telah melebihi batas waktu pendaftaran');
         }
 
         $ipk = $this->upload('pdf', $validated['ipk']);

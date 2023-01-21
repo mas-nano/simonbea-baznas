@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('information', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('ipk');
-            $table->string('achievement')->nullable();
-            $table->string('organization')->nullable();
-            $table->enum('status', ['pending', 'tolak', 'validasi', 'transfer'])->default('pending');
-            $table->string('invoice')->nullable();
+            $table->string('slug')->unique();
+            $table->string('title');
+            $table->string('category');
+            $table->text('first_paragraph');
+            $table->longText('body');
+            $table->string('thumbnail');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('information');
     }
 };

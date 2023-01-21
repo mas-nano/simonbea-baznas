@@ -4,8 +4,7 @@
 
 @push('style')
     <!-- CSS Libraries -->
-    <link rel="stylesheet"
-        href="{{ asset('library/chocolat/dist/css/chocolat.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/chocolat/dist/css/chocolat.css') }}">
 @endpush
 
 @section('main')
@@ -60,10 +59,8 @@
                             <div class="card-body">
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk
                                     of the card's content.</p>
-                                <a href="#"
-                                    class="card-link">Card link</a>
-                                <a href="#"
-                                    class="card-link">Another link</a>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
                             </div>
                         </div>
                         <div class="card">
@@ -179,8 +176,7 @@
                             <div class="card-header">
                                 <h4>Card Header</h4>
                                 <div class="card-header-action">
-                                    <a href="#"
-                                        class="btn btn-primary">
+                                    <a href="#" class="btn btn-primary">
                                         View All
                                     </a>
                                 </div>
@@ -194,12 +190,9 @@
                                 <h4>Button Group</h4>
                                 <div class="card-header-action">
                                     <div class="btn-group">
-                                        <a href="#"
-                                            class="btn btn-primary">Home</a>
-                                        <a href="#"
-                                            class="btn btn-primary">Profile</a>
-                                        <a href="#"
-                                            class="btn btn-primary">Setting</a>
+                                        <a href="#" class="btn btn-primary">Home</a>
+                                        <a href="#" class="btn btn-primary">Profile</a>
+                                        <a href="#" class="btn btn-primary">Setting</a>
                                     </div>
                                 </div>
                             </div>
@@ -211,10 +204,7 @@
                             <div class="card-header">
                                 <h4>Input Text</h4>
                                 <form class="card-header-form">
-                                    <input type="text"
-                                        name="search"
-                                        class="form-control"
-                                        placeholder="Search">
+                                    <input type="text" name="search" class="form-control" placeholder="Search">
                                 </form>
                             </div>
                             <div class="card-body">
@@ -227,10 +217,8 @@
                             <div class="card-header">
                                 <h4>Card Header</h4>
                                 <div class="card-header-action">
-                                    <a href="#"
-                                        class="btn btn-primary">View All</a>
-                                    <a href="#"
-                                        class="btn btn-danger">Delete All</a>
+                                    <a href="#" class="btn btn-primary">View All</a>
+                                    <a href="#" class="btn btn-danger">Delete All</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -241,20 +229,17 @@
                             <div class="card-header">
                                 <h4>Dropdown Button</h4>
                                 <div class="card-header-action">
-                                    <a href="#"
-                                        class="btn btn-primary">View All</a>
+                                    <a href="#" class="btn btn-primary">View All</a>
                                     <div class="dropdown">
-                                        <a href="#"
-                                            data-toggle="dropdown"
+                                        <a href="#" data-toggle="dropdown"
                                             class="btn btn-warning dropdown-toggle">Options</a>
                                         <div class="dropdown-menu">
-                                            <a href="#"
-                                                class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
-                                            <a href="#"
-                                                class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
+                                            <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i>
+                                                View</a>
+                                            <a href="#" class="dropdown-item has-icon"><i class="far fa-edit"></i>
+                                                Edit</a>
                                             <div class="dropdown-divider"></div>
-                                            <a href="#"
-                                                class="dropdown-item has-icon text-danger"><i
+                                            <a href="#" class="dropdown-item has-icon text-danger"><i
                                                     class="far fa-trash-alt"></i> Delete</a>
                                         </div>
                                     </div>
@@ -269,10 +254,7 @@
                                 <h4>Input Button</h4>
                                 <form class="card-header-form">
                                     <div class="input-group">
-                                        <input type="text"
-                                            name="search"
-                                            class="form-control"
-                                            placeholder="Search">
+                                        <input type="text" name="search" class="form-control" placeholder="Search">
                                         <div class="input-group-btn">
                                             <button class="btn btn-primary btn-icon"><i
                                                     class="fas fa-search"></i></button>
@@ -298,13 +280,11 @@
                             <div class="card-header">
                                 <h4>Show/Hide</h4>
                                 <div class="card-header-action">
-                                    <a data-collapse="#mycard-collapse"
-                                        class="btn btn-icon btn-info"
-                                        href="#"><i class="fas fa-minus"></i></a>
+                                    <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i
+                                            class="fas fa-minus"></i></a>
                                 </div>
                             </div>
-                            <div class="collapse show"
-                                id="mycard-collapse">
+                            <div class="collapse show" id="mycard-collapse">
                                 <div class="card-body">
                                     You can show or hide this card.
                                 </div>
@@ -317,19 +297,16 @@
                             <div class="card-header">
                                 <h4>My Picture</h4>
                                 <div class="card-header-action">
-                                    <a href="#"
-                                        class="btn btn-primary">View All</a>
+                                    <a href="#" class="btn btn-primary">View All</a>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="text-muted mb-2">Click the picture below to see the magic!</div>
                                 <div class="chocolat-parent">
-                                    <a href="{{ asset('img/example-image.jpg') }}"
-                                        class="chocolat-image"
+                                    <a href="{{ asset('img/example-image.jpg') }}" class="chocolat-image"
                                         title="Just an example">
                                         <div data-crop-image="285">
-                                            <img alt="image"
-                                                src="{{ asset('img/example-image.jpg') }}"
+                                            <img alt="image" src="{{ asset('img/example-image.jpg') }}"
                                                 class="img-fluid">
                                         </div>
                                     </a>
@@ -338,14 +315,12 @@
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-6">
-                        <div class="card"
-                            id="mycard-dimiss">
+                        <div class="card" id="mycard-dimiss">
                             <div class="card-header">
                                 <h4>Dismiss</h4>
                                 <div class="card-header-action">
-                                    <a data-dismiss="#mycard-dimiss"
-                                        class="btn btn-icon btn-danger"
-                                        href="#"><i class="fas fa-times"></i></a>
+                                    <a data-dismiss="#mycard-dimiss" class="btn btn-icon btn-danger" href="#"><i
+                                            class="fas fa-times"></i></a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -355,8 +330,7 @@
                                 Card Footer
                             </div>
                         </div>
-                        <div class="card"
-                            id="sample-login">
+                        <div class="card" id="sample-login">
                             <form>
                                 <div class="card-header">
                                     <h4>Login</h4>
@@ -371,9 +345,7 @@
                                                     <i class="fas fa-envelope"></i>
                                                 </div>
                                             </div>
-                                            <input type="text"
-                                                class="form-control"
-                                                placeholder="Email">
+                                            <input type="text" class="form-control" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -384,19 +356,14 @@
                                                     <i class="fas fa-lock"></i>
                                                 </div>
                                             </div>
-                                            <input type="password"
-                                                class="form-control"
-                                                placeholder="Password">
+                                            <input type="password" class="form-control" placeholder="Password">
                                         </div>
                                     </div>
                                     <div class="form-group mb-0">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox"
-                                                name="remember"
-                                                class="custom-control-input"
+                                            <input type="checkbox" name="remember" class="custom-control-input"
                                                 id="remember-me">
-                                            <label class="custom-control-label"
-                                                for="remember-me">Remember Me</label>
+                                            <label class="custom-control-label" for="remember-me">Remember Me</label>
                                         </div>
                                     </div>
                                 </div>
@@ -404,8 +371,7 @@
                                     <button type="submit"
                                         onclick="$.cardProgress('#sample-login', {dismiss: true,onDismiss: function() {alert('Dismissed :)')}});return false;"
                                         class="btn btn-primary">Login</button>
-                                    <a href="#"
-                                        class="ml-2">Create new Account?</a>
+                                    <a href="#" class="ml-2">Create new Account?</a>
                                 </div>
                             </form>
                         </div>

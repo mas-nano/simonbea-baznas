@@ -20,17 +20,16 @@
                     <a class="nav-link" href="{{ url('awardee') }}"><i class="fa-solid fa-users fas"></i> <span>Data
                             Penerima</span></a>
                 </li>
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-money-bill fas"></i>
-                        <span>Pencairan
-                            Dana</span></a>
+                <li class="{{ Request::is('pencairan') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('pencairan') }}"><i class="fa-solid fa-money-bill fas"></i>
+                        <span>Pencairan Dana</span></a>
                 </li>
                 <li class="{{ Request::is('document') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('document') }}"><i class="fa-regular fa-file fas"></i>
                         <span>IPK</span></a>
                 </li>
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-circle-info fas"></i>
+                <li class="{{ Request::is('information') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('information') }}"><i class="fa-solid fa-circle-info fas"></i>
                         <span>Informasi Pendaftaran Beasiswa</span></a>
                 </li>
             @else
@@ -50,8 +49,8 @@
                     <a class="nav-link" href="{{ url('penerima') }}"><i class="fa-solid fa-award fas"></i>
                         <span>Penerima BCB Baznas</span></a>
                 </li>
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-money-bill fas"></i>
+                <li class="{{ Request::is('pencairan') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('pencairan') }}"><i class="fa-solid fa-money-bill fas"></i>
                         <span>Pencairan Dana BCB Baznas</span></a>
                 </li>
                 <li class="{{ Request::is('dashboard') ? 'active' : '' }}">

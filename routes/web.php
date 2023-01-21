@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AwardeeController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PencairanController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +69,19 @@ Route::middleware('auth')->group(function () {
         Route::put('{document:uuid}/edit', [DocumentController::class, 'update']);
         Route::delete('{document:uuid}/edit', [DocumentController::class, 'delete'])->name('document.delete');
         Route::put('{document:uuid}', [DocumentController::class, 'validation'])->name('document.validation');
+    });
+
+    Route::prefix('pencairan')->group(function () {
+        Route::get('', [PencairanController::class, 'index'])->name('pencairan.index');
+        Route::post('{document:uuid}', [PencairanController::class, 'create'])->name('pencairan.create');
+    });
+
+    Route::prefix('information')->group(function () {
+        Route::get('', [InformationController::class, 'index'])->name('information.index');
+        Route::get('create', [InformationController::class, 'create'])->name('information.create');
+        Route::post('create', [InformationController::class, 'store']);
+        Route::get('{information:slug}', [InformationController::class, 'show'])->name('information.show');
+        Route::get('{information:slug}/edit', [InformationController::class, 'edit'])->name('information.edit');
     });
 
     Route::post('periode', [PeriodController::class, 'store'])->name('period.store');

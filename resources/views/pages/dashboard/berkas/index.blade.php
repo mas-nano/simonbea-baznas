@@ -74,7 +74,13 @@
                                                                 Buka File</a>
                                                         @endif
                                                     </td>
-                                                    <td>{{ ucfirst($f->status) }}</td>
+                                                    <td>
+                                                        @if ($f->status == 'transfer')
+                                                            Validasi
+                                                        @else
+                                                            {{ ucfirst($f->status) }}
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if ($f->status == 'pending')
                                                             <a class="btn btn-warning"
