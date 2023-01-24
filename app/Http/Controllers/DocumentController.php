@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
+use App\Jobs\SendWhatsappJob;
 use App\Models\Document;
+use App\Models\Fund;
+use App\Models\Mutation;
 use App\Models\Period;
+use App\Models\User;
 use App\Notifications\AwardeeActivated;
 use App\Notifications\AwardeeNonActive;
 use App\Notifications\ParentActivated;
 use App\Notifications\ParentNonActive;
 use App\Traits\UploadFile;
 use DateTime;
-use DateTimeZone;
+use Illuminate\Database\Eloquent\Builder as Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -80,6 +84,19 @@ class DocumentController extends Controller
     public function update(Document $document, UpdateDocumentRequest $request)
     {
         $validated = $request->validated();
+        if (Document::where('user_id', auth()->user()->id)->where('status', 'pending')->count() > 0) {
+            return redirect()->route('document.index')->with('pending', 'Tidak bisa upload berkas karena ada berkas yang pending');
+        }
+
+        if (Document::where('user_id', auth()->user()->id)->where('status', 'tolak')->count() > 0 || auth()->user()->awardee->status == 'nonaktif') {
+            return redirect()->route('document.index')->with('pending', 'Tidak bisa upload berkas karena beasiswa telah ditolak');
+        }
+
+        $period = Period::find(1);
+
+        if (new DateTime() > new DateTime($period->last_registration)) {
+            return redirect()->route('document.index')->with('pending', 'Tidak bisa upload berkas karena telah melebihi batas waktu pendaftaran');
+        }
         if (isset($validated['ipk'])) {
             $org = $this->upload('pdf', $validated['ipk']);
             $validated['ipk'] = $org;
@@ -128,6 +145,10 @@ class DocumentController extends Controller
             $document->update([
                 'status' => 'validasi'
             ]);
+            Fund::create([
+                'user_id' => $document->user->id,
+                'operator_id' => auth()->user()->id
+            ]);
             $document->user->notify(new AwardeeActivated($document->user));
             $document->user->notify(new ParentActivated($document->user));
         } elseif (isset($req['decline'])) {
@@ -137,9 +158,26 @@ class DocumentController extends Controller
             $document->update([
                 'status' => 'tolak'
             ]);
+            if (Document::where('user_id', $document->user->id)->count() > 1) {
+                Mutation::create([
+                    'fromName' => $document->user->id,
+                    'operator_id' => auth()->user()->id
+                ]);
+            }
             $document->user->notify(new AwardeeNonActive($document->user));
             $document->user->notify(new ParentNonActive($document->user));
         }
+
+        return redirect()->route('document.index');
+    }
+
+    public function broadcastWhtasapp()
+    {
+        $user = User::whereHas('awardee', function (Builder $query) {
+            $query->where('status', 'aktif');
+        })->get();
+
+        dispatch(new SendWhatsappJob($user));
 
         return redirect()->route('document.index');
     }

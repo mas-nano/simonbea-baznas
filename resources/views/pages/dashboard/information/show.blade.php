@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create New Post')
+@section('title', $information->title)
 
 @push('style')
     <!-- CSS Libraries -->

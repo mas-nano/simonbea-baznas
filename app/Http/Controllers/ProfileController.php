@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileAwardeeUpdateRequest;
 use App\Http\Requests\ProfileOperatorUpdateRequest;
+use App\Http\Requests\SettingRequest;
 use App\Models\Awardee;
 use App\Models\Operator;
 use App\Models\OrangTua;
 use App\Models\User;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -141,6 +143,9 @@ class ProfileController extends Controller
             unset($validated['identity']);
         }
 
+        $validated['phone'] = '+62' . ltrim($validated['phone'], '0');
+        $validated['parent_phone'] = '+62' . ltrim($validated['parent_phone'], '0');
+
         if (auth()->user()->awardee == null) {
             $ortu = OrangTua::create([
                 'name' => $validated['parent_name'],
@@ -152,7 +157,7 @@ class ProfileController extends Controller
             Awardee::create($validated);
         } else {
             auth()->user()->awardee->update($validated);
-            auth()->user()->operator->parent->update([
+            auth()->user()->awardee->parent->update([
                 'name' => $validated['parent_name'],
                 'salary' => $validated['parent_salary'],
                 'phone' => $validated['parent_phone']
@@ -191,5 +196,23 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('profile.index');
+    }
+
+    public function setting()
+    {
+        return view('pages.dashboard.profile.setting');
+    }
+
+    public function saveSetting(SettingRequest $request)
+    {
+        $validated = $request->validated();
+        if (Hash::check($validated['password_old'], auth()->user()->getAuthPassword())) {
+            auth()->user()->update([
+                'password' => Hash::make($validated['password'])
+            ]);
+            return redirect()->route('profile.setting')->with('success', 'Password berhasil diubah');
+        } else {
+            return redirect()->route('profile.setting')->with('error', 'Password salah');
+        }
     }
 }

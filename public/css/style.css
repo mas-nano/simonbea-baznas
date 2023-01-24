@@ -224,7 +224,7 @@ ol {
 .custom-select:focus,
 .custom-file-label:focus {
     background-color: #fefeff;
-    border-color: #95a0f4;
+    border-color: #002617;
 }
 
 .input-group-text,
@@ -334,7 +334,7 @@ select.form-control:not([size]):not([multiple]) {
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before,
 .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #6777ef !important;
+    background-color: #002617 !important;
 }
 
 .custom-file-label {
@@ -958,7 +958,7 @@ select.form-control:not([size]):not([multiple]) {
     border-top: 2px solid #cdd3d8;
 }
 .card.card-success {
-    border-top: 2px solid #47c363;
+    border-top: 2px solid #002617;
 }
 .card.card-danger {
     border-top: 2px solid #fc544b;
@@ -1674,8 +1674,8 @@ h6 .badge {
 .btn-success,
 .btn-success.disabled {
     box-shadow: 0 2px 6px #81d694;
-    background-color: #47c363;
-    border-color: #47c363;
+    background-color: #002617;
+    border-color: #002617;
     color: #fff;
 }
 .btn-success:hover,

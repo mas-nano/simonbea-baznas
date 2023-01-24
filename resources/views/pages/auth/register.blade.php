@@ -8,9 +8,9 @@
 @endpush
 
 @section('main')
-    <div class="card card-primary">
+    <div class="card card-success">
         <div class="card-header">
-            <h4>Register</h4>
+            <h4 style="color: #002617">Register</h4>
         </div>
 
         <div class="card-body">
@@ -55,7 +55,7 @@
                         @endif
                     </div>
                     <div class="form-group col-6">
-                        <label for="password2" class="d-block">Password Confirmation</label>
+                        <label for="password2" class="d-block">Konfirmasi Password</label>
                         <input id="password2" type="password"
                             class="form-control @if ($errors->has('password_confirmation')) is-invalid @endif"
                             name="password_confirmation">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    <button type="submit" class="btn btn-success btn-lg btn-block">
                         Register
                     </button>
                 </div>

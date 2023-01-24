@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreatePencairanRequest extends FormRequest
 {
@@ -24,17 +25,29 @@ class CreatePencairanRequest extends FormRequest
     public function rules()
     {
         return [
-            'invoice' => 'required|file|image|max:4096'
+            'status' => ['required', Rule::in(['belum transfer', 'sudah transfer'])],
+            'dana' => 'required|numeric',
+            'spp' => 'required|numeric',
+            'received_funds' => 'required|numeric',
+            'catatan' => 'nullable',
+            'invoice' => 'nullable|file|image|max:4096'
         ];
     }
 
     public function messages()
     {
         return [
-            'invoice.required' => 'Bukti transfer harus diisi',
             'invoice.file' => 'Bukti transfer harus berupa file',
             'invoice.image' => 'Bukti transfer harus berupa gambar',
             'invoice.max' => 'Bukti transfer harus max 4MB',
+            'status.required' => 'Status harus diisi',
+            'dana.required' => 'Dana BCB harus diisi',
+            'spp.required' => 'SPP harus diisi',
+            'received_funds.required' => 'Dana Diterima harus diisi',
+            'dana.numeric' => 'Dana BCB harus angka',
+            'received_funds.numeric' => 'Dana Diterima harus angka',
+            'spp.numeric' => 'SPP harus angka',
+            'status.in' => 'Status harus belum transfer atau sudah transfer',
         ];
     }
 }

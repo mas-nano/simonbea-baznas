@@ -8,14 +8,14 @@
 @endpush
 
 @section('main')
-    <div class="card card-primary">
+    <div class="card card-success">
         @if (session('failed'))
             <div class="alert alert-danger mt-1">
                 {{ session('failed') }}
             </div>
         @endif
         <div class="card-header">
-            <h4>Masuk</h4>
+            <h4 style="color: #002617">Masuk</h4>
         </div>
 
         <div class="card-body">
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                    <button type="submit" class="btn btn-success btn-lg btn-block" tabindex="4">
                         Masuk
                     </button>
                 </div>
@@ -63,7 +63,7 @@
         </div>
     </div>
     <div class="text-muted mt-5 text-center">
-        Belum punya akun? <a href="register">Buat akun</a>
+        Belum punya akun? <a href="register" style="color: #002617">Buat akun</a>
     </div>
 @endsection
 

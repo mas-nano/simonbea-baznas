@@ -34,8 +34,15 @@
                             <div class="card-header flex-column">
                                 <div class="d-flex justify-content-between w-100">
                                     <h4>Berkas</h4>
-                                    <button class="btn btn-warning" href="{{ route('document.create') }}" id="modal-5"><i
-                                            class="fa-solid fa-plus"></i> Ubah Periode</button>
+                                    <div class="d-flex">
+                                        <form action="{{ route('document.reminder') }}" method="POST">
+                                            @csrf
+                                            <button class="btn btn-primary mr-2" type="submit"><i
+                                                    class="fa-solid fa-bell"></i> Ingatkan Peserta</button>
+                                        </form>
+                                        <button class="btn btn-warning" href="{{ route('document.create') }}"
+                                            id="modal-5"><i class="fa-solid fa-plus"></i> Ubah Periode</button>
+                                    </div>
                                 </div>
                                 <p class="m-0 w-100">
                                     Periode: Semester {{ ucfirst($period->semester) }} {{ date('Y') }}. Tanggal Akhir
@@ -95,7 +102,7 @@
                                                         <a class="btn btn-primary"
                                                             href="{{ route('awardee.show', $d->user->uuid) }}">Detail
                                                             Penerima</a>
-                                                        @if ($d->status == 'tolak' || $d->status == 'pending')
+                                                        @if ($d->status != 'validasi' && $d->status != 'tolak')
                                                             <form method="POST"
                                                                 action="{{ route('document.validation', $d->uuid) }}"
                                                                 class="form d-inline">
@@ -104,7 +111,6 @@
                                                                 <button class="btn btn-success" type="submit"
                                                                     name="valid" value="true">Validasi</button>
                                                             </form>
-                                                        @else
                                                             <form method="POST"
                                                                 action="{{ route('document.validation', $d->uuid) }}"
                                                                 class="form d-inline">

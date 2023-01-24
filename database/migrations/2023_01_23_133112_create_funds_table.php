@@ -13,14 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('funds', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('ipk');
-            $table->string('achievement')->nullable();
-            $table->string('organization')->nullable();
-            $table->enum('status', ['pending', 'tolak', 'validasi', 'transfer'])->default('pending');
+            $table->string('dana')->nullable();
+            $table->string('spp')->nullable();
+            $table->string('received_funds')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('operator_id')->constrained()->references('id')->on('users')->onDelete('CASCADE');
+            $table->string('catatan')->nullable();
+            $table->enum('status', ['sudah transfer', 'belum transfer'])->default('belum transfer');
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('funds');
     }
 };

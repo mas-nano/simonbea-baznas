@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('mutations', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->string('ipk');
-            $table->string('achievement')->nullable();
-            $table->string('organization')->nullable();
-            $table->enum('status', ['pending', 'tolak', 'validasi', 'transfer'])->default('pending');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('fromName')->constrained()->references('id')->on('users')->onDelete('CASCADE');
+            $table->string('toName')->nullable();
+            $table->foreignId('operator_id')->constrained()->references('id')->on('users')->onDelete('CASCADE');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('mutations');
     }
 };

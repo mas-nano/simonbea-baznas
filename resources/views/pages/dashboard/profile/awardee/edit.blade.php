@@ -78,7 +78,7 @@
                                                 </div>
                                                 <input type="text"
                                                     class="form-control @if ($errors->has('phone')) is-invalid @endif"
-                                                    value="{{ $awardee->awardee == null ? '' : $awardee->awardee->phone }}"
+                                                    value="{{ $awardee->awardee == null ? '' : ltrim($awardee->awardee->phone, '+62') }}"
                                                     name="phone">
                                                 @if ($errors->has('phone'))
                                                     <div class="invalid-feedback">
@@ -297,7 +297,7 @@
                                             </div>
                                             <input type="text"
                                                 class="form-control  @if ($errors->has('parent_phone')) is-invalid @endif"
-                                                value="{{ $awardee->awardee == null ? '' : $awardee->awardee->parent->phone }}"
+                                                value="{{ $awardee->awardee == null ? '' : ltrim($awardee->awardee->parent->phone, '+62') }}"
                                                 name="parent_phone">
                                             @if ($errors->has('parent_phone'))
                                                 <div class="invalid-feedback">

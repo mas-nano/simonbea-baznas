@@ -65,8 +65,24 @@ class User extends Authenticatable
     {
         return $this->awardee->phone;
     }
+
     public function routeNotificationForOrangTua()
     {
         return $this->awardee->parent->phone;
+    }
+
+    public function hasRole($role)
+    {
+        if (is_array($role)) {
+            foreach ($role as $r) {
+                if ($this->role == $r) {
+                    return true;
+                }
+            }
+        } else {
+            return $this->role == $role;
+        }
+
+        return false;
     }
 }

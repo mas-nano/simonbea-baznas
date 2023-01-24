@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Pencairan BCB Baznas')
+@section('title', 'Data Mutasi Penerima')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -18,10 +18,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Pencairan Dana BCB</h1>
+                <h1>Data Mutasi Penerima</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="dashboard">Dashboard</a></div>
-                    <div class="breadcrumb-item">Pencairan Dana BCB</div>
+                    <div class="breadcrumb-item">Mutasi Penerima</div>
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header justify-content-between">
-                                <h4>Data Pencairan Dana BCB</h4>
+                                <h4>Data Mutasi Penerima</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -44,19 +44,16 @@
                                                         No
                                                     @endif
                                                 </th>
-                                                <th>Nama</th>
-                                                <th>Email</th>
-                                                <th>NIM</th>
-                                                <th>Bank</th>
-                                                <th>Rekening</th>
-                                                <th>Status</th>
+                                                <th>Dari</th>
+                                                <th>Ke</th>
+                                                <th>Keterangan</th>
                                                 @if (auth()->user()->role == 'operator')
                                                     <th>Action</th>
                                                 @endif
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($user as $key => $a)
+                                            @foreach ($mutation as $key => $a)
                                                 <tr>
                                                     @if (auth()->user()->role == 'operator')
                                                         <td>{{ $a->uuid }}</td>
@@ -64,25 +61,12 @@
                                                         <td class="text-center">{{ ++$key }}</td>
                                                     @endif
                                                     <td>{{ $a->user->name }}</td>
-                                                    <td>{{ $a->user->email }}</td>
-                                                    <td>{{ $a->user->awardee->nim }}</td>
-                                                    <td>{{ $a->user->awardee->bank }}</td>
-                                                    <td>{{ $a->user->awardee->account_number }}</td>
-                                                    <td>
-                                                        @if ($a->status == 'belum transfer')
-                                                            Belum Transfer
-                                                        @elseif($a->status == 'sudah transfer')
-                                                            Sudah Transfer
-                                                        @endif
-                                                    </td>
+                                                    <td>{{ $a->toName }}</td>
+                                                    <td>{{ $a->keterangan }}</td>
                                                     @if (auth()->user()->role == 'operator')
                                                         <td>
-                                                            <a href="{{ route('pencairan.show', $a->uuid) }}"
-                                                                class="btn btn-primary mr-2">Detail</a>
-                                                            @if ($a->status == 'belum transfer')
-                                                                <a class="btn btn-primary btn-form"
-                                                                    href="{{ route('pencairan.edit', $a->uuid) }}">Transfer</a>
-                                                            @endif
+                                                            <a href="{{ route('mutation.edit', $a->uuid) }}"
+                                                                class="btn btn-primary mr-2">Edit</a>
                                                         </td>
                                                     @endif
                                                 </tr>

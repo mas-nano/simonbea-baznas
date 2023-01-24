@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AwardeeController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\MutationController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PencairanController;
 use App\Http\Controllers\PeriodController;
@@ -21,10 +22,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('pages.landing-page');
+});
+
 Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'loginView'])->name('login');
-    Route::post('/', [AuthController::class, 'login']);
-    Route::get('/register', [AuthController::class, 'registerView']);
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'registerView'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
 });
 
@@ -34,7 +39,7 @@ Route::middleware('auth')->group(function () {
         return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
     })->name('dashboard');
 
-    Route::prefix('operator')->group(function () {
+    Route::prefix('operator')->middleware('role:operator')->group(function () {
         Route::get('', [OperatorController::class, 'index'])->name('operator.index');
         Route::get('create', [OperatorController::class, 'create'])->name('operator.create');
         Route::post('create', [OperatorController::class, 'store']);
@@ -44,7 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('{user:uuid}/delete', [OperatorController::class, 'delete'])->name('operator.delete');
     });
 
-    Route::prefix('awardee')->group(function () {
+    Route::prefix('awardee')->middleware('role:operator')->group(function () {
         Route::get('', [AwardeeController::class, 'index'])->name('awardee.index');
         Route::get('create', [AwardeeController::class, 'create'])->name('awardee.create');
         Route::post('create', [AwardeeController::class, 'store']);
@@ -56,36 +61,59 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('profile')->group(function () {
         Route::get('', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('settings', [ProfileController::class, 'setting'])->name('profile.setting');
+        Route::put('settings', [ProfileController::class, 'saveSetting'])->name('profile.save.setting');
         Route::get('edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('awardee/edit', [ProfileController::class, 'awardeeUpdate'])->name('profile.awardee.update');
-        Route::put('operator/edit', [ProfileController::class, 'operatorUpdate'])->name('profile.operator.update');
+        Route::put('awardee/edit', [ProfileController::class, 'awardeeUpdate'])->name('profile.awardee.update')->middleware('role:awardee');
+        Route::put('operator/edit', [ProfileController::class, 'operatorUpdate'])->name('profile.operator.update')->middleware('role:operator');
     });
 
     Route::prefix('document')->group(function () {
         Route::get('', [DocumentController::class, 'index'])->name('document.index');
-        Route::get('create', [DocumentController::class, 'create'])->name('document.create');
-        Route::post('create', [DocumentController::class, 'store']);
-        Route::get('{document:uuid}/edit', [DocumentController::class, 'edit'])->name('document.edit');
-        Route::put('{document:uuid}/edit', [DocumentController::class, 'update']);
-        Route::delete('{document:uuid}/edit', [DocumentController::class, 'delete'])->name('document.delete');
-        Route::put('{document:uuid}', [DocumentController::class, 'validation'])->name('document.validation');
+        Route::middleware('role:awardee')->group(function () {
+            Route::get('create', [DocumentController::class, 'create'])->name('document.create');
+            Route::post('create', [DocumentController::class, 'store']);
+            Route::get('{document:uuid}/edit', [DocumentController::class, 'edit'])->name('document.edit');
+            Route::put('{document:uuid}/edit', [DocumentController::class, 'update']);
+            Route::delete('{document:uuid}', [DocumentController::class, 'delete'])->name('document.delete')->middleware('role:awardee');
+        });
+        Route::put('{document:uuid}', [DocumentController::class, 'validation'])->name('document.validation')->middleware('role:operator');
+        Route::post('document/reminder', [DocumentController::class, 'broadcastWhtasapp'])->name('document.reminder')->middleware('role:operator');
     });
 
     Route::prefix('pencairan')->group(function () {
         Route::get('', [PencairanController::class, 'index'])->name('pencairan.index');
-        Route::post('{document:uuid}', [PencairanController::class, 'create'])->name('pencairan.create');
+        Route::middleware('role:operator')->group(function () {
+            Route::get('{fund:uuid}', [PencairanController::class, 'show'])->name('pencairan.show');
+            Route::get('{fund:uuid}/edit', [PencairanController::class, 'edit'])->name('pencairan.edit');
+            Route::put('{fund:uuid}/edit', [PencairanController::class, 'create']);
+        });
     });
 
     Route::prefix('information')->group(function () {
         Route::get('', [InformationController::class, 'index'])->name('information.index');
-        Route::get('create', [InformationController::class, 'create'])->name('information.create');
-        Route::post('create', [InformationController::class, 'store']);
+        Route::middleware('role:operator')->group(function () {
+            Route::get('create', [InformationController::class, 'create'])->name('information.create');
+            Route::post('create', [InformationController::class, 'store']);
+        });
         Route::get('{information:slug}', [InformationController::class, 'show'])->name('information.show');
-        Route::get('{information:slug}/edit', [InformationController::class, 'edit'])->name('information.edit');
+        Route::middleware('role:operator')->group(function () {
+            Route::get('{information:slug}/edit', [InformationController::class, 'edit'])->name('information.edit');
+            Route::put('{information:slug}/edit', [InformationController::class, 'update']);
+            Route::delete('{information:slug}/delete', [InformationController::class, 'delete'])->name('information.delete');
+        });
     });
 
-    Route::post('periode', [PeriodController::class, 'store'])->name('period.store');
-    Route::get('penerima', [AwardeeController::class, 'awardeeView']);
+    Route::prefix('mutation')->group(function () {
+        Route::get('', [MutationController::class, 'index'])->name('mutation.index');
+        Route::middleware('role:operator')->group(function () {
+            Route::get('{mutation:uuid}/edit', [MutationController::class, 'edit'])->name('mutation.edit');
+            Route::put('{mutation:uuid}/edit', [MutationController::class, 'update']);
+        });
+    });
+
+    Route::post('periode', [PeriodController::class, 'store'])->name('period.store')->middleware('role:operator');
+    Route::get('penerima', [AwardeeController::class, 'awardeeView'])->middleware('role:awardee');
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });

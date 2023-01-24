@@ -35,7 +35,8 @@
                         <div class="col-12 col-md-6 col-lg-4 pb-4">
                             <div class="card card-primary h-100">
                                 <div class="card-header">
-                                    <img src="{{ asset('storage/' . $p->thumbnail) }}" alt="" class="w-100">
+                                    <img src="{{ asset('storage/' . $p->thumbnail) }}" alt="" class="w-100"
+                                        style="aspect-ratio:16/9; object-fit:cover; object-position:center">
                                 </div>
                                 <div class="card-body">
                                     <h4>{{ $p->title }}</h4>
@@ -46,7 +47,12 @@
                                         href="{{ route('information.show', $p->slug) }}">Lihat</a>
                                     <a class="btn btn-warning mr-1"
                                         href="{{ route('information.edit', $p->slug) }}">Ubah</a>
-                                    <button class="btn btn-danger">Hapus</button>
+                                    <form method="POST" action="{{ route('information.delete', $p->slug) }}"
+                                        class="form d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +73,26 @@
     {{-- <script src="{{ asset() }}"></script> --}}
     {{-- <script src="{{ asset() }}"></script> --}}
     <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-
+    <script>
+        $(".form").submit(function(event) {
+            event.preventDefault()
+            swal({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Sekali menghapus informasi, tidak bisa dikembalikan lagi.',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.submit()
+                        swal('Informasi sudah dihapus', {
+                            icon: 'success',
+                        });
+                    }
+                });
+        })
+    </script>
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 @endpush

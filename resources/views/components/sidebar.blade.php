@@ -32,18 +32,18 @@
                     <a class="nav-link" href="{{ url('information') }}"><i class="fa-solid fa-circle-info fas"></i>
                         <span>Informasi Pendaftaran Beasiswa</span></a>
                 </li>
+                <li class="{{ Request::is('mutation') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('mutation') }}"><i class="fa-solid fa-right-left fas"></i>
+                        <span>Mutasi Penerima</span></a>
+                </li>
             @else
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-circle-info fas"></i>
+                <li class="{{ Request::is('information') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('information') }}"><i class="fa-solid fa-circle-info fas"></i>
                         <span>Informasi BCB Baznas</span></a>
                 </li>
                 <li class="{{ Request::is('document') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('document') }}"><i class="fa-regular fa-file fas"></i>
                         <span>Berkas</span></a>
-                </li>
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-user-gear fas"></i>
-                        <span>Profile Site</span></a>
                 </li>
                 <li class="{{ Request::is('penerima') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('penerima') }}"><i class="fa-solid fa-award fas"></i>
@@ -53,12 +53,12 @@
                     <a class="nav-link" href="{{ url('pencairan') }}"><i class="fa-solid fa-money-bill fas"></i>
                         <span>Pencairan Dana BCB Baznas</span></a>
                 </li>
-                <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('dashboard') }}"><i class="fa-solid fa-right-left fas"></i>
+                <li class="{{ Request::is('mutation') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('mutation') }}"><i class="fa-solid fa-right-left fas"></i>
                         <span>Daftar Mutasi Penerima</span></a>
                 </li>
             @endif
-            <li class="menu-header">Starter</li>
+            {{-- <li class="menu-header">Starter</li>
             <li class="nav-item dropdown active">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Layout</span></a>
@@ -204,7 +204,7 @@
                         <a class="nav-link" href="{{ url('forms-validation') }}">Validation</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item dropdown">
                 <a href="#"
                     class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i> <span>Google
@@ -220,7 +220,7 @@
                     <li><a href="gmaps-simple.html">Simple</a></li>
                 </ul>
             </li> --}}
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-plug"></i> <span>Modules</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('modules-calendar') ? 'active' : '' }}">
@@ -346,13 +346,13 @@
                 <a class="nav-link" href="{{ url('credits') }}"><i class="fas fa-pencil-ruler">
                     </i> <span>Credits</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
 
-        <div class="hide-sidebar-mini mt-4 mb-4 p-3">
+        {{-- <div class="hide-sidebar-mini mt-4 mb-4 p-3">
             <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
                 <i class="fas fa-rocket"></i> Documentation
             </a>
-        </div>
+        </div> --}}
     </aside>
 </div>
