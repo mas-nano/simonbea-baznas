@@ -26,7 +26,7 @@
                             <form method="POST" action="" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-header">
-                                    <h4>Tambah Operator</h4>
+                                    <h4 style="color: #005331">Tambah Operator</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">

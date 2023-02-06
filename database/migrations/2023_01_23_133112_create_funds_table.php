@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('operator_id')->constrained()->references('id')->on('users')->onDelete('CASCADE');
             $table->string('catatan')->nullable();
+            $table->string('invoice')->nullable();
             $table->enum('status', ['sudah transfer', 'belum transfer'])->default('belum transfer');
             $table->timestamps();
         });

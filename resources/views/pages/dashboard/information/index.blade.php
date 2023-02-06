@@ -33,7 +33,7 @@
                 <div class="row">
                     @foreach ($post as $p)
                         <div class="col-12 col-md-6 col-lg-4 pb-4">
-                            <div class="card card-primary h-100">
+                            <div class="card card-success h-100">
                                 <div class="card-header">
                                     <img src="{{ asset('storage/' . $p->thumbnail) }}" alt="" class="w-100"
                                         style="aspect-ratio:16/9; object-fit:cover; object-position:center">

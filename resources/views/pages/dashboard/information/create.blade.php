@@ -25,7 +25,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Tambah Informasi Beasiswa</h4>
+                                <h4 style="color: #005331">Tambah Informasi Beasiswa</h4>
                             </div>
                             <div class="card-body">
                                 <form action="" method="post" enctype="multipart/form-data">

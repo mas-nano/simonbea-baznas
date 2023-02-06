@@ -8,7 +8,7 @@
 @endpush
 
 @section('main')
-    <nav class="navbar navbar-expand-lg" style="background: #002617; position:relative; left:0; right:0">
+    <nav class="navbar navbar-expand-lg" style="background: #002617; position:relative; left:0; right:0; height:100px">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#"><img src="{{ asset('img/logo.png') }}"
                     alt="logo" width="50">
@@ -16,7 +16,7 @@
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <i class="fa-solid fa-bars text-white"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
@@ -55,7 +55,7 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{ asset('img/1608542156.jpeg') }}" alt="First slide"
+                    <img class="d-block w-100" src="{{ asset('img/pic1.jpg') }}" alt="First slide"
                         style="object-fit: cover; object-position:center; height:500px">
                 </div>
                 <div class="carousel-item">

@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nama Operator</label>
-                                    <p>{{ $awardee->awardee == null ? 'Belum diisi' : $awardee->awardee->operator->name }}
+                                    <p>{{ $awardee->awardee == null ? 'Belum diisi' : ($awardee->awardee->operator == null ? 'Belum diisi' : $awardee->awardee->operator->name) }}
                                     </p>
                                 </div>
                             </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AwardeeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\MutationController;
@@ -35,9 +36,7 @@ Route::middleware('guest')->group(function () {
 
 // Dashboard
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('operator')->middleware('role:operator')->group(function () {
         Route::get('', [OperatorController::class, 'index'])->name('operator.index');

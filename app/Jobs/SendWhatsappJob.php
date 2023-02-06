@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Notifications\AwardeeActivated;
+use App\Notifications\AwardeeReminder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,7 +33,7 @@ class SendWhatsappJob implements ShouldQueue
     public function handle()
     {
         foreach ($this->user as $u) {
-            $u->notify(new AwardeeActivated($u));
+            $u->notify(new AwardeeReminder($u));
         }
     }
 }

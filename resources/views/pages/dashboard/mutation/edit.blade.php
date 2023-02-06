@@ -23,7 +23,7 @@
                                 @method('PUT')
                                 @csrf
                                 <div class="card-header">
-                                    <h4>Ubah Data Mutasi</h4>
+                                    <h4 style="color: #005331">Ubah Data Mutasi</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">

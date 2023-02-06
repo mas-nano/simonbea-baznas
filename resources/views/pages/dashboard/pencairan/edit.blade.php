@@ -28,7 +28,7 @@
                                 @method('PUT')
                                 @csrf
                                 <div class="card-header">
-                                    <h4>Form Transfer</h4>
+                                    <h4 style="color: #005331">Form Transfer</h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">

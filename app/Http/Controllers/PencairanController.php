@@ -6,6 +6,7 @@ use App\Http\Requests\CreatePencairanRequest;
 use App\Http\Requests\UpdatePencairanRequest;
 use App\Models\Document;
 use App\Models\Fund;
+use App\Notifications\AwardeeInvoice;
 use App\Traits\UploadFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -48,20 +49,12 @@ class PencairanController extends Controller
             }
             $path = $this->upload('images', $validated['invoice']);
             $validated['invoice'] = $path;
+            $fund->user->notify(new AwardeeInvoice($fund->user, $validated['received_funds'], asset('storage/' . $path)));
         } else {
             unset($validated['invoice']);
         }
 
         $validated['operator_id'] = auth()->user()->id;
-        $fund->update($validated);
-
-        return redirect()->route('pencairan.index');
-    }
-
-    public function update(Fund $fund, UpdatePencairanRequest $request)
-    {
-        $validated = $request->validated();
-
         $fund->update($validated);
 
         return redirect()->route('pencairan.index');

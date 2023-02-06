@@ -16,10 +16,15 @@ class WhatsAppChannel
 
         $twilio = new Client(config('services.twilio.sid'), config('services.twilio.token'));
 
-
-        return $twilio->messages->create('whatsapp:' . $to, [
+        $send = [
             "from" => 'whatsapp:' . $from,
             "body" => $message->content
-        ]);
+        ];
+
+        if ($message->media != '') {
+            $send['mediaUrl'] = [$message->media];
+        }
+        // dd($send);
+        return $twilio->messages->create('whatsapp:' . $to, $send);
     }
 }
